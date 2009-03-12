@@ -204,7 +204,6 @@ sub ACTION_code {
     }
     make_path(_dir(qw[blib arch auto FLTK]), {verbose => 1, mode => 0711});
 
-
     if (!
             $self->up_to_date(
                 [@obj, @libs],
@@ -225,14 +224,10 @@ sub ACTION_code {
         ]
     );
 
-    warn sprintf 'Created the following files (to clean up later) for %s%s',
-        $dll,join "\n   -", @cleanup;
-
-        s["][]g for @cleanup;
-            $self->add_to_cleanup(map { _abs($_) } @cleanup);
-
-#die join ', ',  $self->cleanup;
-
+      @cleanup = map {s["][]g; _abs($_); } @cleanup;
+      $self->add_to_cleanup(@cleanup);
+      $self->add_to_cleanup(@obj);
+      $self->add_to_cleanup(@libs);
     }
     $self->SUPER::ACTION_code;
 }
@@ -246,6 +241,8 @@ sub _xs_to_cpp {
 
     my @xsi;
     find sub{ push @xsi, $File::Find::name if m[\.xsi$]} , _dir('xs');
+
+    $self->add_to_cleanup($cpp);
 
     return $cpp if $self->up_to_date([@xsi, $xs, _dir('xs', $typemap)], $cpp);
 
@@ -278,11 +275,13 @@ sub _build_fltk {
     LIB: for my $_lib (keys %{$LIBS{$dir}}) {
             my @objects;
             my $lib = _dir(qw[.. lib], $_lib . $Config{'_a'});
+            $self->add_to_cleanup(_abs($lib));
             push @libs, _abs($lib);
             next LIB if -e $lib;
             printf "# Gathering objects for %s...\n", _rel($lib);
         FILE: for my $file (@{$LIBS{$dir}{$_lib}}) {
             my $obj = $c->object_file($file);
+            $self->add_to_cleanup(_abs($obj));
             push @objects, $obj;
                 if(!$self->up_to_date($file, $obj)) {
                 $c->compile(
@@ -304,6 +303,7 @@ sub _build_fltk {
 
             printf "# Archiving %s...\n", $lib;
             unlink $lib;
+            $self->add_to_cleanup(_abs($lib));
             _run($Config{'ar'}, 'cr', $lib, @objects) or do {
                 printf 'Building %s failed.', $lib;
                 return 0;

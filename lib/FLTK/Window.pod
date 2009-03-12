@@ -1,39 +1,10 @@
-
-package FLTK::Window;
-use strict;
-use warnings;
-
-use version; our $VERSION = qw[0.001_001];
-
-require DynaLoader;
-
-our @ISA = qw[DynaLoader];
-
-
-bootstrap FLTK::Window  ;
-
-#sub AUTOLOAD {
-#    warn join q[, ], @_;
-#    #warn FLTK::hello();
-#}
-
-#bootstrap FLTK $VERSION;
-
-1;
-
 =head1 NAME
 
-FLTK - A wrapper for installing the FLTK Perl bindings
+Fl::Window - A top level window widget
 
 =head1 DESCRIPTION
 
-FLTK is a wrapper to install the FLTK bindings for Perl.
-
-It comes with a copy of FLTK 1.3.X which it will be compiled.
-
-=head1 BUGS and FEEDBACK
-
-Please send bug reports, problems and feedback to...
+TODO
 
 =head1 Author
 

@@ -149,11 +149,33 @@ sub FL_IMAGE_LABEL ()    {7}
 
 FLTK - A wrapper for installing the FLTK Perl bindings
 
-=head1 DESCRIPTION
+=head1 Description
 
 FLTK is a wrapper to install the FLTK bindings for Perl.
 
 It comes with a copy of FLTK 1.3.X which it will be compiled.
+
+=head1 Supported Widgets
+
+This list is updated as I write interfaces to FLTK's supported widgets.
+
+=head2 Group Level Widgets
+
+Group Level Widgets include C<Windows|Fl::Window>, C<Boxes|Fl::Box>, and [...]
+
+
+=head2 Valuator Widgets
+
+Valuator Widgets include C<Value Sliders|Fl::Value::Slider>, simple
+C<Sliders|Fl::Slider>, and [...]
+
+=head2 Button Widgets
+
+FLTK supports a number of different types of Buttons including
+C<Return Buttons|Fl::Return::Button>,  C<Repeat Buttons|Fl::Repeat::Button>,
+buttons with a C<little light that toggles on and off|Fl::Light::Button>,
+radio or C<"round" buttons|Fl::Round::Button>, and
+C<check boxes|Fl::Check::Buttons>.
 
 =head1 BUGS and FEEDBACK
 
@@ -179,6 +201,9 @@ When separated from the distribution, all POD documentation is covered
 by the Creative Commons Attribution-Share Alike 3.0 License.  See
 http://creativecommons.org/licenses/by-sa/3.0/us/legalcode.  For
 clarification, see http://creativecommons.org/licenses/by-sa/3.0/us/.
+
+FLTK.pm is based in part on the work of the FLTK project
+(http://www.fltk.org).
 
 =for svn $Id: FLTK.pm 50cb1f3 2009-03-12 06:02:40Z sanko@cpan.org $
 
