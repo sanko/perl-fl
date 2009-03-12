@@ -1,0 +1,11 @@
+#include <FL/Fl_Repeat_Button.H>
+
+MODULE = FLTK               PACKAGE = Fl::Repeat::Button
+
+Fl_Repeat_Button *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new Fl_Repeat_Button(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL

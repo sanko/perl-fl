@@ -1,0 +1,51 @@
+#include <FL/Fl_Valuator.H>
+
+MODULE = FLTK               PACKAGE = Fl::Valuator
+
+
+double
+value(Fl_Valuator * widget, int value = NO_INIT)
+    CODE:
+        if (items > 1) {
+            widget->value(value);
+            RETVAL = (value == widget->value()) ? value : NULL;
+        }
+        else
+            RETVAL = widget->value();
+    OUTPUT:
+        RETVAL
+
+int
+range(Fl_Valuator * widget, double min, double max)
+    CODE:
+        widget->range(min, max);
+        RETVAL =((min == widget->minimum()) &&
+                 (max == widget->maximum())
+                ) ? 1 : 0;
+    OUTPUT:
+        RETVAL
+
+double
+minimum(Fl_Valuator * widget, double min = NO_INIT)
+    CODE:
+        if (items > 1) {
+            widget->minimum(min);
+            RETVAL = (min == widget->minimum()) ? min : NULL;
+        }
+        else
+            RETVAL = widget->minimum();
+    OUTPUT:
+        RETVAL
+
+
+double
+maximum(Fl_Valuator * widget, double max = NO_INIT)
+    CODE:
+        if (items > 1) {
+            widget->maximum(max);
+            RETVAL = (max == widget->maximum()) ? max : NULL;
+        }
+        else
+            RETVAL = widget->maximum();
+    OUTPUT:
+        RETVAL

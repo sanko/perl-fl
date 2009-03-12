@@ -1,0 +1,10 @@
+#include <FL/Fl_Text_Buffer.H>
+
+MODULE = FLTK               PACKAGE = Fl::Text::Buffer
+
+Fl_Text_Buffer *
+new(char *package, int requestedSize = 0, int preferredGapSize = 1024)
+    CODE:
+        RETVAL = new Fl_Text_Buffer(requestedSize, preferredGapSize);
+    OUTPUT:
+        RETVAL

@@ -1,0 +1,26 @@
+Version 0.0XX | Distant future | 96c75ae
+
+    API Changes/Compatibility Information:
+     * It actually exists
+
+     Resolved Issues/Bug Fixes:
+     * ...see above
+
+    Internal/Behavioral Changes:
+     * ...see above
+
+    Documentation/Sample Code/Test Suite:
+     * ...see above
+
+    Notes:
+     * Meanwhile...
+         - ...stuff is going on.
+
+_ -.-. .... .- -. --. . ... _________________________________________
+For more information, see the commit log:
+    http://code.google.com/p/sanko/source/list
+
+$Ver: 0.001_001 $ from git
+$Date: 2009-03-12 06:02:40Z (Thu, 12 Mar 2009) $
+$Rev: 50cb1f3fb0abadfde25416184ef68d0993b81d2d $
+$Url: http://github.com/sanko/net-bittorrent/raw/50cb1f3fb0abadfde25416184ef68d0993b81d2d/Changes $

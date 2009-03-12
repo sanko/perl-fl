@@ -1,0 +1,161 @@
+#include <EXTERN.h>
+#include <perl.h>
+#include <XSUB.h>
+
+#include <FL/Fl_Widget.H>
+
+MODULE = FLTK               PACKAGE = Fl::Widget
+
+const char *
+label(Fl_Widget * widget, char * label = NO_INIT)
+    CODE:
+        if (items > 1) {
+            widget->label(label);
+            RETVAL = (label == widget->label()) ? label : NULL;
+        }
+        else
+            RETVAL = widget->label();
+    OUTPUT:
+        RETVAL
+
+int
+labelsize(Fl_Widget * widget, int size)
+    CODE:
+        if (items > 1) {
+            widget->labelsize(size);
+            RETVAL = (size == widget->labelsize()) ? size : NULL;
+        }
+        else
+            RETVAL = widget->labelsize();
+    OUTPUT:
+        RETVAL
+
+int
+labelfont(Fl_Widget * widget, int font)
+    CODE:
+        if (items > 1) {
+            widget->labelfont((Fl_Font) font);
+            RETVAL = (font == widget->labelfont()) ? font : NULL;
+        }
+        else
+            RETVAL = widget->labelfont();
+    OUTPUT:
+        RETVAL
+
+int
+labeltype(Fl_Widget * widget, ...)
+    CODE:
+        if (items > 1) {
+            Fl_Labeltype type = lookup_label(SvIV(ST(1)));
+            widget->labeltype(type);
+            RETVAL = (type == widget->labeltype()) ? type : NULL;
+            //warn ("---> %d | %d | %d", FL_SHADOW_LABEL, type, widget->labeltype());
+        }
+        else
+            RETVAL = widget->labeltype();
+    OUTPUT:
+        RETVAL
+
+const char *
+tooltip(Fl_Widget * widget, char *tooltip = NO_INIT)
+    CODE:
+        if (items > 1) {
+            widget->tooltip(tooltip);
+            RETVAL = (tooltip == widget->tooltip()) ? tooltip : NULL;
+        }
+        else
+            RETVAL = widget->tooltip();
+    OUTPUT:
+        RETVAL
+
+int
+callback(Fl_Widget * widget, ...)
+    CASE: items >= 2
+    CODE:
+        AV *arr = newAV();
+        av_store(arr, 0, newSVsv((SV*)ST(1)));
+        av_store(arr, 1, newSVsv((SV*)ST(0)));
+        for (int i = 2; i < items; i++) {
+            av_store(arr, i, newSVsv((SV*)ST(i)));
+        }
+        widget->callback(cb, (void*)arr);
+        RETVAL = widget->callback() ? 1 : 0; // TODO - check sub == callback()[1]
+    OUTPUT:
+        RETVAL
+
+int
+position(Fl_Widget * widget, int XPos, int YPos)
+    CODE:
+        widget->position(XPos, YPos);
+        RETVAL = (
+            (XPos == widget->x()) && (YPos == widget->y())
+        ) ? 1 : NULL;
+    OUTPUT:
+        RETVAL
+
+int
+x(Fl_Widget * widget)
+    CODE:
+        RETVAL = widget->x();
+    OUTPUT:
+        RETVAL
+
+int
+y(Fl_Widget * widget)
+    CODE:
+        RETVAL = widget->y();
+    OUTPUT:
+        RETVAL
+
+int
+w(Fl_Widget * widget)
+    CODE:
+        RETVAL = widget->w();
+    OUTPUT:
+        RETVAL
+
+int
+h(Fl_Widget * widget)
+    CODE:
+        RETVAL = widget->h();
+    OUTPUT:
+        RETVAL
+
+int
+align(Fl_Widget * widget, ...)
+    CODE:
+        if (items > 1) {
+            Fl_Align align = lookup_align(SvIV(ST(1)));
+            widget->align(align);
+            RETVAL = (align == widget->align()) ? align : NULL;
+            //warn ("---> %d | %d | %d", FL_SHADOW_LABEL, type, widget->labeltype());
+        }
+        else
+            RETVAL = widget->align();
+    OUTPUT:
+        RETVAL
+
+int
+box(Fl_Widget * widget, int box = NO_INIT)
+    CODE:
+        if (items > 1) {
+            widget->box(lookup_box(box));
+            RETVAL = (box == widget->box()) ? box : NULL;
+        }
+        else
+            RETVAL = widget->box();
+    OUTPUT:
+        RETVAL
+
+int
+color(Fl_Widget * widget, int color = NO_INIT)
+    CODE:
+        if (items > 1) {
+            //group->box(lookup_box(color));
+            widget->color(color);
+            RETVAL = (color == widget->color()) ? color : NULL;
+        }
+        else
+            RETVAL = widget->color();
+    OUTPUT:
+        RETVAL

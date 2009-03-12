@@ -1,0 +1,11 @@
+#include <FL/Fl_Text_Display.H>
+
+MODULE = FLTK               PACKAGE = Fl::Text::Display
+
+Fl_Text_Display *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new Fl_Text_Display(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL

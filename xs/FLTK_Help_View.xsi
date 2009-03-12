@@ -1,0 +1,18 @@
+#include <FL/Fl_Help_View.H>
+
+MODULE = FLTK               PACKAGE = Fl::Help::View
+
+Fl_Help_View *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new Fl_Help_View(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL
+
+const char *
+value(Fl_Help_View * widget, ...)
+    CODE:
+        RETVAL = widget->value();
+    OUTPUT:
+        RETVAL

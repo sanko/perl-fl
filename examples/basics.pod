@@ -1,0 +1,183 @@
+=pod
+
+=head1 NAME
+
+basics - FLTK Basics Tutorial
+
+=head1 Description
+
+This chapter teaches you the basics of running rograms that use FLTK.
+
+=head1 Writing Your First FLTK Program
+
+All programs must C<use FLTK>. This automatically includes packages for all
+other FLTK classes. L<Listing 1|/listing1> shows a simple "Hello, World!"
+program that uses FLTK to display the window.
+
+X<listing1>Listing 1 - C<hello.pl>
+
+  use FLTK qw[:boxtypes :fonts :labeltypes];
+
+  my $window = new Fl::Window(300, 180);
+  my $box = new Fl::Box(FL_UP_BOX, 20, 40, 260, 100, "Hello, World!");
+  $box->labelfont(FL_BOLD + FL_ITALIC);
+  $box->labelsize(36);
+  $box->labeltype(FL_SHADOW_LABEL);
+  $window->end();
+  $window->show();
+  exit Fl::run();
+
+After including the required module and importing various tags, the program
+then creates a window. All following widgets will automatically be children of
+this window.
+
+  my $window = new Fl::Window(300, 180);
+
+Then we create a box with the C<"Hello, World!"> string in it. FLTK
+automatically adds the new box to C<$window>, the current grouping widget. In
+this example, we also set the type of box.
+
+  my $box = new Fl::Box(FL_UP_BOX, 20, 40, 260, 100, "Hello, World!");
+
+Next, we set the size, font, and style of the label:
+
+  $box->labelfont(FL_BOLD + FL_ITALIC);
+  $box->labelsize(36);
+  $box->labeltype(FL_SHADOW_LABEL);
+
+We tell FLTK that we will not add any more widgets to C<$window>.
+
+  $window->end();
+
+Finally, we show the window and enter the FLTK event loop:
+
+  $window->show();
+  exit Fl::run();
+
+You can quit the program by closing the window or pressing the C<ESC>ape key.
+
+=head1 Creating the Widgets
+
+X<basics_creating>The widgets are created using Perl's C<new> operator. For
+most widgets the arguments to the constructor are:
+
+  Fl::Widget(x, y, width, height, label);
+
+=over
+
+=item The C<x> and C<y> parameters...
+
+...determine where the widget or window is placed on the screen. In FLTK the
+top left corner of the window or screen is the origin (i.e. C<x = 0>,
+C<y = 0>) and the units are in pixels.
+
+=item The C<width> and C<height> parameters...
+
+...determine the size of the widget or window in pixels. The maximum widget
+size is typically governed by the underlying window system or hardware.
+
+=item C<label>...
+
+...is a string to label the widget with or C<undef>. If not specified, the
+label defaults to C<undef>.
+
+=back
+
+=head1 Creating Widget hierarchies [TODO]
+
+X<basics_hierarchies>Widgets are commonly ordered into functional groups,
+which in turn may be grouped again, creating a hierarchy of widgets. FLTK
+makes it easy to fill groups by automatically adding all widgets that are
+created between a C<$myGroup-E<gt>begin()> and C<$myGroup-E<gt>end()>. In this
+example, C<$myGroup> would be the I<current> group.
+
+Newly created groups and their derived widgets implicitly call C<begin()> in
+the constructor, effectively adding all subsequently created widgets to itself
+until C<end()> is called.
+
+Setting the current group to C<undef> will stop automatic hierarchies. New
+widgets can now be added manually using C<Fl::Group-E<gt>add(...)> and
+C<Fl::Group-E<gt>insert(...)>.
+
+=head1 Get/Set Methods
+
+X<basics_getset>C<$box-E<gt>box(FL_UP_BOX)> sets the type of box the Fl::Box
+draws, changing it from the default of C<FL_NO_BOX>, which means that no box
+is drawn. In our C<"Hello, World!"> example we use C<FL_UP_BOX>, which means
+that a raised button border will be drawn around the widget. You can learn
+more about boxtypes in L<Chapter 3|common.pod/boxtypes>.
+
+You could examine the boxtype in by doing C<$box-E<gt>box()>. FLTK uses method
+name overloading to make short names for get/set methods. A "set" method is
+always of the form C<name(type)>, and a "get" method is always of the form
+C<name()>.
+
+=head1 Redrawing After Changing Attributes
+
+X<basics_redrawing>Almost all of the set/get pairs are very fast, short inline
+functions and thus very efficient. However, I<the "set" methods do not call
+C<redraw()>> - you have to call it yourself. This greatly reduces code size
+and execution time. The only common exceptions are C<value()> which calls
+C<redraw()> and C<label()> which calls C<redraw_label()> if necessary.
+
+=head1 Labels
+
+X<basics_labels>All widgets support labels.  In the case of window widgets,
+the label is used for the label in the title bar. Our example program calls
+the C<labelfont()>, C<labelsize>, and C<labeltype()> methods.
+
+The C<labelfont> method sets the typeface and style that is used for the
+label, which for this example we are using C<FL_BOLD> and C<FL_ITALIC>. You
+can also specify typefaces directly.
+
+The C<labelsize> method sets the height of the font in pixels.
+
+The C<labeltype> method sets the type of label. FLTK supports normal,
+embossed, and shadowed labels internally, and more types can be added as
+desired.
+
+A complete list of all label options can be found in
+L<Chapter 3|common.pod/labels>.
+
+=head1 Showing the Window
+
+X<basics_showing>The C<show()> method shows the widget or window. For windows
+you can also provide the command-line arguments to allow users to customize
+the appearance, size, and position of your windows.
+
+=head1 The Main Event Loop
+
+X<basics_eventloop>All FLTK applications (and most GUI applications in
+general) are based on a simple event processing model. User actions such as
+mouse movement, button clicks, and keyboard activity generate events that are
+sent to an application. The application may then ignore the events or respond
+to the user, typically by redrawing a button in the "down" position, adding
+the text to an input field, and so forth.
+
+FLTK also supports idle, timer, and file pseudo-events that cause a function
+to be called when they occur. Idle functions are called when no user input is
+present and no timers or files need to be handled - in short, when the
+application is not doing anything. Idle callbacks are often used to update a
+3D display or do other background processing.
+
+Timer functions are called after a specific amount of time has expired. They
+can be used to pop up a progress dialog after a certain amount of time or do
+other things that need to happen at more-or-less regular intervals. FLTK
+timers are not 100% accurate, so they should not be used to measure time
+intervals, for example.
+
+File functions are called when data is ready to read or write, or when an
+error condition occurs on a file. They are most often used to monitor network
+connections (sockets) for data-driven displays.
+
+FLTK applications must periodically check (C<Fl::check()>) or wait
+(C<Fl::wait()>) for events or use the C<Fl::run()> method to enter a standard
+event processing loop. Calling C<Fl::run()> is equivalent to the following
+code:
+
+  while (Fl::wait()) { }
+
+C<Fl::run()> does not return until all of the windows under FLTK control are
+closed by the user or your program.
+
+=cut

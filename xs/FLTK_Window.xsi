@@ -1,0 +1,82 @@
+#include <FL/Fl_Window.H>
+
+MODULE = FLTK               PACKAGE = Fl::Window
+
+Fl_Window *
+new(package, ...)
+    CASE: items == 3 || items == 4
+        int    Width   = (int)SvIV(ST(1));
+        int    Height  = (int)SvIV(ST(2));
+        PREINIT:
+        char * Label =  PL_origfilename;
+        ALIAS:
+            new_wh = 1
+        CODE:
+            if (items == 4)
+                Label = (char *)SvPV_nolen(ST(3));
+            RETVAL = new Fl_Window(Width, Height, Label);
+        OUTPUT:
+            RETVAL
+    CASE: items == 5 || items == 6
+        int    XPos    = (int)SvIV(ST(1));
+        int    YPos    = (int)SvIV(ST(2));
+        int    Width   = (int)SvIV(ST(3));
+        int    Height  = (int)SvIV(ST(4));
+        PREINIT:
+            char * Label = "";
+        ALIAS:
+            new_xywh = 2
+        CODE:
+            if (items == 6)
+                Label = (char *)SvPV_nolen(ST(5));
+            RETVAL = new Fl_Window(XPos, YPos, Width, Height, Label);
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            RETVAL = NULL;
+            warn("See perldoc %s for help.", "Fl::Window", items);
+        OUTPUT:
+            RETVAL
+
+bool
+set_modal(Fl_Window * window)
+    CODE:
+        window->set_modal();
+        RETVAL = window->modal();
+    OUTPUT:
+        RETVAL
+
+bool
+set_non_modal(Fl_Window * window)
+    CODE:
+        window->set_non_modal();
+        RETVAL = window->non_modal();
+    OUTPUT:
+        RETVAL
+
+int
+show(Fl_Window * window)
+    CODE:
+        window->show();
+        RETVAL = window->shown();
+    OUTPUT:
+        RETVAL
+
+int
+hide(Fl_Window * window)
+    CODE:
+        window->hide();
+        RETVAL = !window->shown();
+    OUTPUT:
+        RETVAL
+
+int
+redraw(Fl_Window * window)
+    CODE:
+        window->redraw();
+        RETVAL = 1;
+    OUTPUT:
+        RETVAL
+
+

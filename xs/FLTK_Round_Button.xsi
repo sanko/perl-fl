@@ -1,0 +1,11 @@
+#include <FL/Fl_Round_Button.H>
+
+MODULE = FLTK               PACKAGE = Fl::Round::Button
+
+Fl_Round_Button *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new Fl_Round_Button(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL

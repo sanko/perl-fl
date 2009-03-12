@@ -1,0 +1,62 @@
+#include <FL/Fl_Button.H>
+
+MODULE = FLTK               PACKAGE = Fl::Button
+
+Fl_Button *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new Fl_Button(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL
+
+
+int
+type(Fl_Button * widget, int type = NO_INIT)
+    CODE:
+        if (items > 1) {
+            widget->type(type);
+            RETVAL = (type == widget->type()) ? type : NULL;
+        }
+        else
+            RETVAL = widget->type();
+    OUTPUT:
+        RETVAL
+
+int
+value(Fl_Button * widget, int value = NO_INIT)
+    CODE:
+        if (items > 1) {
+            widget->value(value);
+            RETVAL = (value == widget->value()) ? value : NULL;
+        }
+        else
+            RETVAL = widget->value();
+    OUTPUT:
+        RETVAL
+
+int
+set(Fl_Button * widget)
+    CODE:
+        RETVAL = widget->set();
+    OUTPUT:
+        RETVAL
+
+int
+clear(Fl_Button * widget)
+    CODE:
+        RETVAL = widget->clear();
+    OUTPUT:
+        RETVAL
+
+int
+setonly(Fl_Button * widget)
+    CODE:
+        if (widget->type() == FL_RADIO_BUTTON) {
+            widget->setonly();
+            RETVAL = widget->value();
+        }
+        else
+            RETVAL = 0;
+    OUTPUT:
+        RETVAL

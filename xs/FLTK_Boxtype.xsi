@@ -1,0 +1,70 @@
+MODULE = FLTK     PACKAGE = Fl::Boxtype
+
+void
+draw(wd,x,y,w,h,f=0)
+  const Fl_Widget *wd
+  int x
+  int y
+  int w
+  int h
+  Fl_Flags f
+
+int
+fills_rectangle(box)
+    Fl_Boxtype box
+    CODE:
+        RETVAL = box->fills_rectangle;
+    OUTPUT:
+        RETVAL
+
+int
+dx(box)
+    Fl_Boxtype box
+    CODE:
+        RETVAL = box->dh();
+    OUTPUT:
+        RETVAL
+
+int
+dy(box)
+    Fl_Boxtype box
+    CODE:
+        RETVAL = box->dy();
+    OUTPUT:
+        RETVAL
+
+int
+dw(box)
+    Fl_Boxtype box
+    CODE:
+        RETVAL = box->dw();
+    OUTPUT:
+        RETVAL
+
+int
+dh(box)
+    Fl_Boxtype box
+    CODE:
+        RETVAL = box->dh();
+    OUTPUT:
+        RETVAL
+
+void
+inset(X,Y,W,H)
+    Fl_Boxtype box
+    int X
+    int Y
+    int W
+    int H
+    CODE:
+        box->inset(X, Y, W, H);
+    OUTPUT:
+        X
+        Y
+        W
+        H
+
+const Fl_Boxtype *
+find(box, n)
+    Fl_Boxtype box
+    const char *n

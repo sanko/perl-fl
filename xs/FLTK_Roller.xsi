@@ -1,0 +1,10 @@
+#include <FL/Fl_Roller.H>
+
+MODULE = FLTK               PACKAGE = Fl::Roller
+
+Fl_Roller *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Value = "")
+    CODE:
+        RETVAL = new Fl_Roller(XPos, YPos, Width, Height, Value);
+    OUTPUT:
+        RETVAL

@@ -1,0 +1,11 @@
+#include <FL/Fl_Output.H>
+
+MODULE = FLTK               PACKAGE = Fl::Output
+
+Fl_Output *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new Fl_Output(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL

@@ -1,0 +1,11 @@
+#include <FL/Fl_Scrollbar.H>
+
+MODULE = FLTK               PACKAGE = Fl::Scrollbar
+
+Fl_Scrollbar *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Value = "")
+    CODE:
+        RETVAL = new Fl_Scrollbar(XPos, YPos, Width, Height, Value);
+    OUTPUT:
+        RETVAL
+

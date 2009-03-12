@@ -1,0 +1,11 @@
+#include <FL/Fl_Text_Editor.H>
+
+MODULE = FLTK               PACKAGE = Fl::Text::Editor
+
+Fl_Text_Editor *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new Fl_Text_Editor(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL

@@ -1,0 +1,11 @@
+#include <FL/Fl_Multiline_Output.H>
+
+MODULE = FLTK               PACKAGE = Fl::Multiline::Output
+
+Fl_Multiline_Output *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Label = "")
+    CODE:
+        RETVAL = new Fl_Multiline_Output(XPos, YPos, Width, Height, Label);
+        RETVAL->copy_label(Label);
+    OUTPUT:
+        RETVAL

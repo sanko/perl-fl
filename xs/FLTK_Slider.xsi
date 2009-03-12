@@ -1,0 +1,11 @@
+#include <FL/Fl_Slider.H>
+
+MODULE = FLTK               PACKAGE = Fl::Slider
+
+Fl_Slider *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Value = "")
+    CODE:
+        RETVAL = new Fl_Slider(XPos, YPos, Width, Height, Value);
+    OUTPUT:
+        RETVAL
+

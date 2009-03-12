@@ -1,0 +1,80 @@
+#include <FL/Fl_Group.H>
+
+MODULE = FLTK               PACKAGE = Fl::Group
+
+Fl_Group *
+new(char *package, ...)
+    CASE: items == 5 || items == 6
+        int    XPos    = (int)SvIV(ST(1));
+        int    YPos    = (int)SvIV(ST(2));
+        int    Width   = (int)SvIV(ST(3));
+        int    Height  = (int)SvIV(ST(4));
+        PREINIT:
+            char * Label = "";
+        ALIAS:
+            new_xywh = 2
+        CODE:
+            if (items == 6)
+                Label = (char *)SvPV_nolen(ST(5));
+            RETVAL = new Fl_Group(XPos, YPos, Width, Height, Label);
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            RETVAL = NULL;
+            warn("See perldoc %s for help.", package, items);
+        OUTPUT:
+            RETVAL
+
+const char *
+label(Fl_Group * group, char *label = NO_INIT)
+    CODE:
+        if (items > 1) {
+            group->label(label);
+            RETVAL = (label == group->label()) ? label : NULL;
+        }
+        else
+            RETVAL = group->label();
+    OUTPUT:
+        RETVAL
+
+int
+box(Fl_Group * group, int box = NO_INIT)
+    CODE:
+        if (items > 1) {
+            group->box(lookup_box(box));
+            RETVAL = (box == group->box()) ? box : NULL;
+        }
+        else
+            RETVAL = group->box();
+    OUTPUT:
+        RETVAL
+
+int
+color(Fl_Group * group, int color = NO_INIT)
+    CODE:
+        if (items > 1) {
+            //group->box(lookup_box(color));
+            group->color(color);
+            RETVAL = (color == group->color()) ? color : NULL;
+        }
+        else
+            RETVAL = group->color();
+    OUTPUT:
+        RETVAL
+
+int
+resizable(Fl_Group * group, Fl_Widget * sizer)
+    CODE:
+        group->resizable(sizer); // TODO: return the sizer widget/box
+        RETVAL = 1;
+    OUTPUT:
+        RETVAL
+
+int
+end(Fl_Group * group)
+    CODE:
+        group->end();
+        RETVAL = 1;
+    OUTPUT:
+        RETVAL

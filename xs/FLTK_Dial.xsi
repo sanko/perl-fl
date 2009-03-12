@@ -1,0 +1,10 @@
+#include <FL/Fl_Dial.H>
+
+MODULE = FLTK               PACKAGE = Fl::Dial
+
+Fl_Dial *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Value = "")
+    CODE:
+        RETVAL = new Fl_Dial(XPos, YPos, Width, Height, Value);
+    OUTPUT:
+        RETVAL

@@ -1,0 +1,37 @@
+#include <FL/Fl_Box.H>
+
+MODULE = FLTK               PACKAGE = Fl::Box
+
+Fl_Box *
+new(package, ...)
+    CASE: items == 5 || items == 6
+        int XPos   = (int)SvIV(ST(1));
+        int YPos   = (int)SvIV(ST(2));
+        int Width  = (int)SvIV(ST(3));
+        int Height = (int)SvIV(ST(4));
+        PREINIT:
+            char * Label = "";
+        CODE:
+            if (items == 6)
+                Label = (char *)SvPV_nolen(ST(5));
+            RETVAL = new Fl_Box(XPos, YPos, Width, Height, Label);
+        OUTPUT:
+            RETVAL
+    CASE: items = 7
+        Fl_Boxtype BType = lookup_box(SvIV(ST(1)));
+        int    XPos   = (int)   SvIV(ST(2));
+        int    YPos   = (int)   SvIV(ST(3));
+        int    Width  = (int)   SvIV(ST(4));
+        int    Height = (int)   SvIV(ST(5));
+        char * Label  = (char *)SvPV_nolen(ST(6));
+        CODE:
+            RETVAL = new Fl_Box(BType, XPos, YPos, Width, Height, Label);
+            RETVAL->copy_label(Label);
+        OUTPUT:
+            RETVAL
+    CASE:
+        CODE:
+            RETVAL = NULL;
+            warn("See perldoc %s for help.", "Fl::Box", items);
+        OUTPUT:
+            RETVAL

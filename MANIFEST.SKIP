@@ -1,0 +1,57 @@
+# Avoid version control files.
+\B\.git\b
+\B\.gitnore$
+
+# Avoid self
+^MANIFEST\.SKIP$
+
+# Avoid Module::Build generated and utility files.
+\bBuild$
+\bBuild.bat$
+\b_build
+\bBuild.COM$
+\bBUILD.COM$
+\bbuild.com$
+\bblib
+
+# Avoid Devel::Cover generated files
+\bcover_db
+
+# Avoid temp and backup files.
+~$
+\.tmp$
+\.old$
+\.bak$
+\#$
+\.#
+\.rej$
+
+# Avoid OS-specific files/dirs
+#   Mac OSX metadata
+\B\.DS_Store
+#   Mac OSX SMB mount metadata files
+\B\._
+
+#
+#\bFLTK-[\d\.\_]+
+src/FLTK-1.3.x/config.h
+src/~.*
+\bFLTK-[\d\.\_]+
+
+# Avoid objects, archives, and other build-related junk
+\.o$
+\.a$
+src/fltk-1.3.x/config\.status$
+src/fltk-1.3.x/makeinclude$
+src/fltk-1.3.x/fltk\.list$
+src/fltk-1.3.x/fltk-config$
+src/fltk-1.3.x/fltk\.spec$
+src/fltk-1.3.x/FL/Makefile$
+src/fltk-1.3.x/config.h$
+xs/.*.cxx
+
+# Avoid random stuff from... who knows where
+.orig
+git.pod
+commitlog.txt
+

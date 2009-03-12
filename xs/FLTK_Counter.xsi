@@ -1,0 +1,10 @@
+#include <FL/Fl_Counter.H>
+
+MODULE = FLTK               PACKAGE = Fl::Counter
+
+Fl_Counter *
+new(char *package, int XPos, int YPos, int Width, int Height, const char *Value = "")
+    CODE:
+        RETVAL = new Fl_Counter(XPos, YPos, Width, Height, Value);
+    OUTPUT:
+        RETVAL
